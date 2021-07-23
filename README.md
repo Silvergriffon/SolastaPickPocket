@@ -3,6 +3,8 @@
 This mod retores Sleight Of Hand as a usable skill in Solasta: Crown of the Magister.
 The skill is no longer marked as "unused in Solasta", and most hostile humanoids can now be pick-pocketed, as well as some corporeal undead.
 
+Also adds a new feat called Pickpocket, which grants proficiency or expertise with Sleight Of Hand and advantage on Sleight Of Hand Dexterity checks.
+
 # How to Compile
 
 0. Install all required development pre-requisites:
