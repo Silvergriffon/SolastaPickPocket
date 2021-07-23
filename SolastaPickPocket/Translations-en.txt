@@ -1,2 +1,2 @@
-SolastaPickPocket/&NoTitle	None
-SolastaPickPocket/&NoDescription	None at all
+Feat/&PickPocketFeatTitle	Pickpocket
+Feat/&PickPocketFeatDescription	You gain proficiency with Sleight Of Hand, or expertise if already proficient. You also have advantage on Sleight of Hand Dexterity checks.

@@ -131,7 +131,65 @@ namespace SolastaPickPocket
             }
         }
 
+        public class PickPocketAbilityCheckAffinityBuilder : BaseDefinitionBuilder<FeatureDefinitionAbilityCheckAffinity>
+        {
+            protected PickPocketAbilityCheckAffinityBuilder(string name, string guid, string title_string, string description_string, FeatureDefinitionAbilityCheckAffinity base_check_affinity) : base(base_check_affinity, name, guid)
+            {
+                if (title_string != "")
+                {
+                    Definition.GuiPresentation.Title = title_string;
+                }
+                if (description_string != "")
+                {
+                    Definition.GuiPresentation.Description = description_string;
+                }
+            }
+            public static FeatureDefinitionAbilityCheckAffinity CreateCopyFrom(string name, string guid, string new_title_string, string new_description_string, FeatureDefinitionAbilityCheckAffinity base_check_affinity)
+            {
+                return new PickPocketAbilityCheckAffinityBuilder(name, guid, new_title_string, new_description_string, base_check_affinity).AddToDB();
 
+            }
+        }
+
+        public class PickPocketProficiencyBuilder : BaseDefinitionBuilder<FeatureDefinitionProficiency>
+        {
+            protected PickPocketProficiencyBuilder(string name, string guid, string title_string, string description_string, FeatureDefinitionProficiency base_proficiency) : base(base_proficiency, name, guid)
+            {
+                if (title_string != "")
+                {
+                    Definition.GuiPresentation.Title = title_string;
+                }
+                if (description_string != "")
+                {
+                    Definition.GuiPresentation.Description = description_string;
+                }
+            }
+            public static FeatureDefinitionProficiency CreateCopyFrom(string name, string guid, string new_title_string, string new_description_string, FeatureDefinitionProficiency base_proficiency)
+            {
+                return new PickPocketProficiencyBuilder(name, guid, new_title_string, new_description_string, base_proficiency).AddToDB();
+
+            }
+        }
+
+        public class PickPocketFeatBuilder : BaseDefinitionBuilder<FeatDefinition>
+        {
+            protected PickPocketFeatBuilder(string name, string guid, string title_string, string description_string, FeatDefinition base_Feat) : base(base_Feat, name, guid)
+            {
+                if (title_string != "")
+                {
+                    Definition.GuiPresentation.Title = title_string;
+                }
+                if (description_string != "")
+                {
+                    Definition.GuiPresentation.Description = description_string;
+                }
+            }
+            public static FeatDefinition CreateCopyFrom(string name, string guid, string new_title_string, string new_description_string, FeatDefinition base_Feat)
+            {
+                return new PickPocketFeatBuilder(name, guid, new_title_string, new_description_string, base_Feat).AddToDB();
+
+            }
+        }
 
         internal static void OnGameReady()
         {
@@ -232,7 +290,7 @@ namespace SolastaPickPocket
             pick_pocket_table.TreasureOptions.Add(treasure_refinedoil);
             pick_pocket_table.TreasureOptions.Add(treasure_acid);
             pick_pocket_table.TreasureOptions.Add(treasure_amethyst);
- 
+
             TreasureTableDefinition pick_pocket_table_undead = Main.TreasureTableDefinitionBuilder.createCopyFrom("PickPocketTableC", "f1bbd8e5-3e05-48da-9c70-2db676a280b4", "", "", DatabaseHelper.TreasureTableDefinitions.RandomTreasureTableG_25_GP_Art_Items);
             pick_pocket_table_undead.TreasureOptions.Add(treasure_copper);
             pick_pocket_table_undead.TreasureOptions.Add(treasure_abyss_moss);
@@ -301,6 +359,31 @@ namespace SolastaPickPocket
             MonsterDefinition skeleton_sorcerer = DatabaseHelper.MonsterDefinitions.Skeleton_Sorcerer;
             skeleton_sorcerer.SetStealableLootDefinition(pick_pocket_undead);
 
+            FeatureDefinitionAbilityCheckAffinity pickpocket_check_affinity = PickPocketAbilityCheckAffinityBuilder.CreateCopyFrom(
+                "AbilityCheckAffinityFeatPickPocket", "30b1492a-053f-412e-b247-798fbc255038", "Feat/&PickPocketFeatTitle", "Feat/&PickPocketFeatDescription",
+                DatabaseHelper.FeatureDefinitionAbilityCheckAffinitys.AbilityCheckAffinityFeatLockbreaker);
+            FeatureDefinitionAbilityCheckAffinity.AbilityCheckAffinityGroup pickpocketAbilityCheckAffinityGroup = new FeatureDefinitionAbilityCheckAffinity.AbilityCheckAffinityGroup();
+            pickpocketAbilityCheckAffinityGroup.SetField("abilityScoreName", "Dexterity");
+            pickpocketAbilityCheckAffinityGroup.SetField("proficiencyName", "SleightOfHand");
+            pickpocketAbilityCheckAffinityGroup.SetField("affinity", RuleDefinitions.CharacterAbilityCheckAffinity.Advantage);
+            pickpocket_check_affinity.AffinityGroups.Clear();
+            pickpocket_check_affinity.AffinityGroups.Add(pickpocketAbilityCheckAffinityGroup);
+
+            FeatureDefinitionProficiency pickpocket_proficiency = PickPocketProficiencyBuilder.CreateCopyFrom(
+                "ProficiencyFeatPickPocket", "d8046b0c-2f93-4b47-b2dd-110234a4a848", "Feat/&PickPocketFeatTitle", "Feat/&PickPocketFeatDescription",
+                DatabaseHelper.FeatureDefinitionProficiencys.ProficiencyFeatLockbreaker);
+            pickpocket_proficiency.SetProficiencyType(ProficiencyType.SkillOrExpertise);
+            pickpocket_proficiency.Proficiencies.Clear();
+            pickpocket_proficiency.Proficiencies.Add("SleightOfHand");
+
+
+            FeatDefinition PickPocketFeat = PickPocketFeatBuilder.CreateCopyFrom(
+                "PickPocketFeat", "947a31fc-4990-45a5-bcfd-6c478b4dff8a", "Feat/&PickPocketFeatTitle", "Feat/&PickPocketFeatDescription",
+                DatabaseHelper.FeatDefinitions.Lockbreaker);
+            PickPocketFeat.Features.Clear();
+            PickPocketFeat.Features.Add(pickpocket_check_affinity);
+            PickPocketFeat.Features.Add(pickpocket_proficiency);
         }
+
     }
 }
