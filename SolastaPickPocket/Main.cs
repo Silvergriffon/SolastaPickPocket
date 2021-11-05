@@ -9,6 +9,7 @@ using ModKit;
 using ModKit.Utility;
 using static RuleDefinitions;
 using SolastaModApi.Infrastructure;
+using static SolastaModApi.DatabaseHelper.LootPackDefinitions;
 
 namespace SolastaPickPocket
 {
@@ -297,12 +298,12 @@ namespace SolastaPickPocket
             pick_pocket_table_undead.TreasureOptions.Add(treasure_deeproot_lichen);
             pick_pocket_table_undead.TreasureOptions.Add(treasure_goblinhair_fungus);
 
-            ItemOccurence loot_pickpocket_table = new ItemOccurence();
+            ItemOccurence loot_pickpocket_table = new ItemOccurence(Zombie_loot_drop.ItemOccurencesList[0]);
             loot_pickpocket_table.SetItemMode(ItemOccurence.SelectionMode.TreasureTable);
             loot_pickpocket_table.SetTreasureTableDefinition(pick_pocket_table);
             loot_pickpocket_table.SetDiceNumber(1);
 
-            ItemOccurence loot_pickpocket_undead = new ItemOccurence();
+            ItemOccurence loot_pickpocket_undead = new ItemOccurence(Zombie_loot_drop.ItemOccurencesList[0]);
             loot_pickpocket_undead.SetItemMode(ItemOccurence.SelectionMode.TreasureTable);
             loot_pickpocket_undead.SetTreasureTableDefinition(pick_pocket_table_undead);
             loot_pickpocket_undead.SetDiceNumber(1);
